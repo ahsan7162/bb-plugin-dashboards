@@ -7,9 +7,10 @@ A [bb](https://getbb.app) plugin for dashboards you build by asking an agent and
      which renders as an inline player. Delete this comment afterwards. -->
 <!-- video goes here -->
 
-<!-- SCREENSHOT hero-dark.png (the picture is ready at docs/screenshots/hero-dark.png): the dashboard "Harbor Coffee — Weekly Sales" alone in bb's side panel, dark mode: its header with Edit, Colours and the version list, four KPI tiles with sparklines, a revenue trend chart and revenue by product as bars. The reply and its card are not in the picture. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![The Harbor Coffee weekly sales dashboard in bb's side panel, dark mode: KPI tiles with sparklines, a revenue trend and revenue by product](docs/screenshots/hero-dark.png) and, if you want it, this caption on its own line: *A dashboard in bb's side panel, dark mode, with invented sales data for a coffee shop.* -->
+<img width="1578" height="2504" alt="hero-dark" src="https://github.com/user-attachments/assets/95368c7b-91e4-406a-a3d9-118b1a78b649" />
 
-<!-- SCREENSHOT hero-light.png (the picture is ready at docs/screenshots/hero-light.png): the same dashboard as hero-dark.png in bb's light mode. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![The same dashboard in light mode](docs/screenshots/hero-light.png) and, if you want it, this caption on its own line: *The same dashboard in light mode.* -->
+
+<img width="1578" height="2504" alt="hero-light" src="https://github.com/user-attachments/assets/b9b4589d-301e-4ab9-9b04-8ccc1886ad9d" />
 
 ## What it does
 
@@ -46,7 +47,7 @@ flowchart LR
 
 The agent's reply holds a small `bb-dashboard` block with the dashboard's id, which bb draws as a card. "Open in side panel" opens the dashboard in its own tab beside the thread. The header shows the title, how the dashboard refreshes, and the Edit, Colours and version controls. If bb cannot open the side panel where the card is, the card points to the Dashboards page. See [docs/getting-started.md](docs/getting-started.md).
 
-<!-- SCREENSHOT card-in-reply-dark.png (the picture is ready at docs/screenshots/card-in-reply-dark.png): the chat column only, dark mode: the user's prompt and the agent's reply ending with the dashboard card and its "Open in side panel" button. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![A prompt and the agent's reply ending with the dashboard card and its Open in side panel button](docs/screenshots/card-in-reply-dark.png) and, if you want it, this caption on its own line: *The card in the reply opens the dashboard in the side panel.* -->
+<img width="1578" height="1700" alt="card-in-reply-dark" src="https://github.com/user-attachments/assets/61302db1-44ee-4296-a22d-79d1ee73e3ac" />
 
 ### Changing a dashboard by prompt, and versions
 
@@ -66,45 +67,44 @@ A dashboard declares named, read-only sources and reads each with a `Query` stat
 
 All but the last refresh by themselves, every 10 seconds at the shortest, and pause while the tab is hidden. `Freshness` shows when a source last answered; `RefreshButton` refreshes now. See [docs/data-sources.md](docs/data-sources.md), [docs/connections.md](docs/connections.md) and [docs/scripts.md](docs/scripts.md).
 
-<!-- SCREENSHOT live-data-dark.png (the picture is ready at docs/screenshots/live-data-dark.png): a dashboard over a JSON file, dark mode: the header label "Refreshes itself", KPI tiles, a Freshness line reading "Updated just now · refreshes itself", a Refresh button, a bar chart and a table. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![A dashboard over a JSON file: Refreshes itself in the header, KPI tiles, a Freshness line, a Refresh button, a bar chart and a table](docs/screenshots/live-data-dark.png) and, if you want it, this caption on its own line: *A dashboard that reads a JSON file and refreshes itself.* -->
+<img width="1578" height="2504" alt="live-data-dark" src="https://github.com/user-attachments/assets/208fe29f-567e-4e67-a912-c1a36b2cda95" />
 
-<!-- SCREENSHOT connections-dark.png (the picture is ready at docs/screenshots/connections-dark.png): the Connections section of the Dashboards page, dark mode: the Limits note and one invented local-command connection reading "Ready: 3 read-only tools confirmed", its secret shown as "set", the list of tools the server offers, and "Find existing servers". Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![The Connections section: the Limits note, one connection ready with 3 confirmed read-only tools, its secret set, and Find existing servers](docs/screenshots/connections-dark.png) and, if you want it, this caption on its own line: *The plugin's own MCP connections, on the Dashboards page.* -->
+<img width="1632" height="1414" alt="connections-dark" src="https://github.com/user-attachments/assets/086e2a2d-0fbc-46e7-9794-b4dd9bc55704" />
 
-<!-- SCREENSHOT script-approval-dark.png (the picture is ready at docs/screenshots/script-approval-dark.png): the approval dialog for a 25-line read-only script, dark mode: the warning banner with the limit line, "Why it exists", "What it gets", the whole script, "No lines are flagged." with the note that no flags does not mean safe, "Don't run" focused and Approve still disabled. No flagged line is shown. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![The script approval dialog: the warning, why it exists, what it gets, the whole script with no flagged lines, and Approve still disabled](docs/screenshots/script-approval-dark.png) and, if you want it, this caption on its own line: *The approval dialog for a short read-only script; Approve is still off.* -->
+<img width="1532" height="1502" alt="script-approval-dark" src="https://github.com/user-attachments/assets/8a317b7f-527d-4fb1-a17d-7cb0f419be1a" />
 
 ### Interactivity without the model
 
 Filters, tabs, search boxes, toggles and sliders set `$variables` that the rest of the program reads, so the dashboard responds at once. Picking an item in a `RecordList` opens its details in a `Drawer`. The panel remembers the choices you made, per dashboard, in your browser. None of this calls the model. See [docs/components.md](docs/components.md#the-drill-down-pattern).
 
-<!-- SCREENSHOT components-dark.png (the picture is ready at docs/screenshots/components-dark.png): a support queue dashboard, dark mode: Tabs (Open, Solved), a warning Callout, an AskAgent button, a SearchBox, a Toggle, a RecordList with status Badges and one record picked, and that record's details Drawer with key-values, Markdown notes and a LinkOut. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![A support queue dashboard with tabs, a warning callout, an AskAgent button, search, a toggle, a record list with status badges and the details drawer of the picked record](docs/screenshots/components-dark.png) and, if you want it, this caption on its own line: *The plugin's own components: tabs, a callout, AskAgent, search, a toggle, a record list and the drawer for the picked record.* -->
+<img width="1578" height="2504" alt="components-dark" src="https://github.com/user-attachments/assets/972af57e-2cd5-479d-8f70-c7cc7dc1e413" />
 
 ### Edit mode: point at a part and ask for a change
 
 Click Edit in the dashboard's header, then click a chart, card, filter or any other part (or Tab to it and press Enter). A popover shows what you picked, with breadcrumbs, and a box for what should change. Send delivers one message to the thread that names the dashboard, the version, the part and its piece of the program, and asks the agent to change only that. Each Send costs one agent turn. See [docs/editing.md](docs/editing.md#edit-mode).
 
-<!-- SCREENSHOT edit-mode-dark.png (the picture is ready at docs/screenshots/edit-mode-dark.png): Edit mode on, dark mode: the revenue chart outlined and selected, and the popover with breadcrumbs (Section › Card › TimeSeries), a typed request, and Cancel and Send. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![Edit mode in dark mode: the revenue chart selected and the change popover with breadcrumbs and a typed request](docs/screenshots/edit-mode-dark.png) and, if you want it, this caption on its own line: *Edit mode: the selected chart, where it sits, and the request to send.* -->
-
-<!-- SCREENSHOT edit-mode-light.png (the picture is ready at docs/screenshots/edit-mode-light.png): the same scene as edit-mode-dark.png in bb's light mode. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![Edit mode in light mode, the same chart selected](docs/screenshots/edit-mode-light.png) and, if you want it, this caption on its own line: *The same in light mode.* -->
+<img width="1578" height="2504" alt="edit-mode-dark" src="https://github.com/user-attachments/assets/9a717292-0e7e-46dc-88fc-603137902d85" />
+<img width="1578" height="2504" alt="edit-mode-light" src="https://github.com/user-attachments/assets/deeda0bc-93db-4157-a538-38704bf69a4f" />
 
 ### Colours and themes
 
 A dashboard follows bb's theme in light and dark mode. Charts start from bb's main colour; when that colour is a neutral grey, as in bb's stock theme, they start from bb's blue accent, then its other accent colours, then OpenUI's palette. The agent can give a dashboard its own theme (colours, radius, spacing and one of three generic fonts), saved as a new version. On top of both, the Colours button lets whoever is looking pick an accent, chart colours (from the accent, or one of two colour-blind-friendly palettes) and a light or dark look for that dashboard. Those choices stay in your browser, cost no model call and make no version. See [docs/themes-and-colours.md](docs/themes-and-colours.md).
 
-<!-- SCREENSHOT colours-dark.png (the picture is ready at docs/screenshots/colours-dark.png): a dashboard in bb's side panel, dark mode, with the Colours popover open from its header: the Teal accent picked and "Chart colours" on "From the accent", the charts behind it drawn from the teal accent. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![The Colours popover in dark mode with the Teal accent and chart colours from the accent](docs/screenshots/colours-dark.png) and, if you want it, this caption on its own line: *The Colours popover in dark mode: Teal accent, chart colours from the accent.* -->
+<img width="1578" height="2504" alt="colours-dark" src="https://github.com/user-attachments/assets/bdb476f7-998c-4efd-a728-a2fb4db4f19c" />
 
-<!-- SCREENSHOT colours-light.png (the picture is ready at docs/screenshots/colours-light.png): the same dashboard and popover as colours-dark.png in light mode, Teal accent and "From the accent" chart colours. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![The Colours popover in light mode with the Teal accent and chart colours from the accent](docs/screenshots/colours-light.png) and, if you want it, this caption on its own line: *The same choices in light mode.* -->
+<img width="1578" height="2504" alt="colours-light" src="https://github.com/user-attachments/assets/19b97c09-182c-4de0-b160-402a465a75dd" />
 
 ### The Dashboards page
 
 A page in bb's navigation lists every dashboard, last changed first, with its number of versions and a link to the thread it was made in. Open one there, or delete it with all its versions. The page's Connections section manages the plugin's MCP connections. See [docs/getting-started.md](docs/getting-started.md#reopening-a-dashboard).
 
-<!-- SCREENSHOT dashboards-page-dark.png (the picture is ready at docs/screenshots/dashboards-page-dark.png): the Dashboards page, dark mode: the Dashboards / Connections switch and five invented dashboards, each with its last change, number of versions, a link to the thread it was made in, and Delete. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![The Dashboards page listing five dashboards with their last change, versions, thread link and Delete](docs/screenshots/dashboards-page-dark.png) and, if you want it, this caption on its own line: *Every dashboard in one list.* -->
+<img width="1632" height="782" alt="dashboards-page-dark" src="https://github.com/user-attachments/assets/cc33f9cf-d21a-476f-ac37-a6a31e771097" />
 
 ### Working alongside inline-reply UI plugins
 
 Some bb plugins let an agent draw charts and tables inline in a reply. The `dashboards` skill draws the line: what you want to keep, reopen, change later or have refreshed becomes a dashboard; a chart that only answers the current message stays in the reply. One reply can hold both, and a change to something already saved as a dashboard changes the dashboard instead of drawing a new inline chart. This was checked in real threads with both kinds of plugin installed. See [docs/agents.md](docs/agents.md#working-alongside-inline-reply-ui-plugins).
 
-<!-- SCREENSHOT inline-and-dashboard-dark.png (the picture is ready at docs/screenshots/inline-and-dashboard-dark.png): one agent reply, dark mode, holding both an inline table drawn in the reply and a dashboard card. The dashboard is not open beside it. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![One reply with an inline table and a dashboard card](docs/screenshots/inline-and-dashboard-dark.png) and, if you want it, this caption on its own line: *An inline table answers the question; the card keeps the dashboard.* -->
+<img width="3160" height="1242" alt="inline-and-dashboard-dark" src="https://github.com/user-attachments/assets/5a4748b7-c183-45bb-a4a3-5415c689604e" />
 
 ## Components
 
