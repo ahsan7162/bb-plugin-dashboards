@@ -1,0 +1,758 @@
+/* The plugin's own components. Colours, radii and spacing come from the dashboard library's
+   --openui-dashboard-* tokens, so one theme styles old and new components alike. bb's build appends
+   this file to app.css unscoped, hence the bbd- prefix on every class and keyframe.
+
+   Motion: opacity and transform only, so nothing shifts layout; one set of timings, here; nothing
+   loops. Entrances sit on static classes, so they play once when an element is inserted and never
+   when it redraws with new data. Under reduced motion everything is instant (last block). */
+:root {
+  --bbd-enter: 180ms;
+  --bbd-exit: 130ms;
+  --bbd-quick: 120ms; /* hover, press, focus */
+  --bbd-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --bbd-ease-in: cubic-bezier(0.4, 0, 1, 1);
+}
+
+@keyframes bbd-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes bbd-drawer-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@keyframes bbd-drawer-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Badge, Callout, Empty, Markdown: fade in once. */
+.bbd-enter {
+  animation: bbd-fade-in var(--bbd-enter) var(--bbd-ease-out) both;
+}
+
+/* Hover and pressed tints: a layer under the content whose opacity changes. */
+.bbd-tab::before,
+.bbd-record-pick::before,
+.bbd-ask::before,
+.bbd-drawer-close::before,
+.bbd-record-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--openui-dashboard-ink) 5%, transparent);
+  opacity: 0;
+  transition: opacity var(--bbd-quick) var(--bbd-ease-out);
+  pointer-events: none;
+}
+.bbd-tab:hover::before,
+.bbd-record-pick:hover::before,
+.bbd-ask:hover::before,
+.bbd-drawer-close:hover::before,
+.bbd-record-link:hover::before {
+  opacity: 1;
+}
+
+/* Keyboard focus: a ring in the accent, as the library's controls have. */
+.bbd-tab:focus-visible,
+.bbd-tabpanel:focus-visible,
+.bbd-record-pick:focus-visible,
+.bbd-record-link:focus-visible,
+.bbd-toggle:focus-visible,
+.bbd-drawer-close:focus-visible,
+.bbd-slider-input:focus-visible {
+  outline: 2px solid var(--openui-dashboard-accent);
+  outline-offset: 1px;
+}
+
+/* Tabs */
+.bbd-tabs {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.bbd-tablist {
+  position: relative;
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--openui-dashboard-border);
+  scrollbar-width: none;
+}
+.bbd-tab {
+  position: relative;
+  isolation: isolate;
+  flex: none;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: var(--openui-dashboard-radius-sm) var(--openui-dashboard-radius-sm) 0 0;
+  background: none;
+  color: var(--openui-dashboard-ink-secondary);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.bbd-tab[aria-selected="true"] {
+  color: var(--openui-dashboard-ink);
+}
+.bbd-tab:focus-visible {
+  outline-offset: -2px;
+}
+/* One underline that slides to the active tab: 1px wide, scaled to the tab's width. */
+.bbd-tab-indicator {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 2px;
+  background: var(--openui-dashboard-accent);
+  transform-origin: 0 0;
+  transition: transform var(--bbd-enter) var(--bbd-ease-out);
+  pointer-events: none;
+}
+.bbd-tabpanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--openui-dashboard-space-sm);
+  padding-top: var(--openui-dashboard-space-sm);
+  border-radius: var(--openui-dashboard-radius-sm);
+  animation: bbd-fade-in var(--bbd-enter) var(--bbd-ease-out) both;
+}
+
+/* Drawer: a card-like panel that slides and fades in, and out again when closed. */
+.bbd-drawer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--openui-dashboard-space-sm);
+  min-width: 0;
+  padding: var(--openui-dashboard-space-lg) var(--openui-dashboard-space-xl);
+  border: 1px solid var(--openui-dashboard-border-strong);
+  border-radius: var(--openui-dashboard-radius);
+  background: var(--openui-dashboard-surface);
+  box-shadow: var(--openui-dashboard-shadow-pop, var(--openui-dashboard-shadow));
+  animation: bbd-drawer-in var(--bbd-enter) var(--bbd-ease-out) both;
+}
+.bbd-drawer[data-state="closed"] {
+  animation: bbd-drawer-out var(--bbd-exit) var(--bbd-ease-in) both;
+  pointer-events: none;
+}
+.bbd-drawer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.bbd-drawer-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.bbd-drawer-close {
+  position: relative;
+  isolation: isolate;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  margin: -4px -6px 0 0;
+  border: 0;
+  border-radius: var(--openui-dashboard-radius-sm);
+  background: none;
+  color: var(--openui-dashboard-ink-muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.bbd-drawer-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--openui-dashboard-space-sm);
+  min-width: 0;
+}
+
+/* RecordList */
+.bbd-records {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bbd-record {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+}
+.bbd-record-pick {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  flex: 1 1 auto;
+  gap: 3px;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--openui-dashboard-radius-sm);
+  background: none;
+  color: var(--openui-dashboard-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--bbd-quick) var(--bbd-ease-out);
+}
+.bbd-record-pick:active {
+  transform: scale(0.99);
+}
+/* The selected row's highlight: its own layer, so it eases in over the hover tint. */
+.bbd-record-pick::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--openui-dashboard-accent) 12%, transparent);
+  box-shadow: inset 2px 0 0 var(--openui-dashboard-accent);
+  opacity: 0;
+  transition: opacity var(--bbd-enter) var(--bbd-ease-out);
+  pointer-events: none;
+}
+.bbd-record-pick[aria-pressed="true"]::after {
+  opacity: 1;
+}
+.bbd-record-title {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.bbd-record-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  font-size: 12px;
+  color: var(--openui-dashboard-ink-muted);
+}
+.bbd-record-link {
+  position: relative;
+  isolation: isolate;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  border-radius: var(--openui-dashboard-radius-sm);
+  color: var(--openui-dashboard-ink-muted);
+  text-decoration: none;
+}
+.bbd-records-none {
+  margin: 0;
+  font-size: 12px;
+  color: var(--openui-dashboard-ink-muted);
+}
+
+/* Badge, and the status in a Record */
+.bbd-badge {
+  --bbd-tone: var(--openui-dashboard-ink-muted);
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  height: 20px;
+  padding: 0 7px;
+  border: 1px solid color-mix(in srgb, var(--bbd-tone) 28%, transparent);
+  border-radius: var(--openui-dashboard-radius-sm);
+  background: color-mix(in srgb, var(--bbd-tone) 12%, var(--openui-dashboard-surface));
+  color: color-mix(in srgb, var(--bbd-tone) 70%, var(--openui-dashboard-ink));
+  font-size: 11.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.bbd-record-meta .bbd-badge {
+  align-self: center;
+}
+.bbd-badge[data-tone="good"] {
+  --bbd-tone: var(--openui-dashboard-good);
+}
+.bbd-badge[data-tone="bad"] {
+  --bbd-tone: var(--openui-dashboard-bad);
+}
+.bbd-badge[data-tone="warning"] {
+  --bbd-tone: var(--openui-dashboard-warning);
+}
+.bbd-badge[data-tone="info"] {
+  --bbd-tone: var(--openui-dashboard-info);
+}
+
+/* LinkOut: an underline that draws in on hover, an arrow that nudges, a ring that fades in. */
+.bbd-link,
+.bbd-link-plain {
+  align-self: flex-start;
+  font-size: 13px;
+}
+.bbd-link {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  color: var(--openui-dashboard-accent);
+  text-decoration: none;
+  border-radius: 2px;
+  transition: opacity var(--bbd-quick) var(--bbd-ease-out);
+}
+.bbd-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--bbd-quick) var(--bbd-ease-out);
+}
+.bbd-link:hover::after {
+  transform: none;
+}
+.bbd-link-arrow {
+  display: inline-block;
+  transition: transform var(--bbd-quick) var(--bbd-ease-out);
+}
+.bbd-link:hover .bbd-link-arrow {
+  transform: translate(2px, -2px);
+}
+.bbd-link:active {
+  opacity: 0.7;
+}
+.bbd-link::before,
+.bbd-ask::after,
+.bbd-search::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 2px solid var(--openui-dashboard-accent);
+  border-radius: calc(var(--openui-dashboard-radius-md) + 3px);
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity var(--bbd-quick) var(--bbd-ease-out),
+    transform var(--bbd-quick) var(--bbd-ease-out);
+  pointer-events: none;
+}
+.bbd-link:focus-visible,
+.bbd-ask:focus-visible {
+  outline: none;
+}
+.bbd-link:focus-visible::before,
+.bbd-ask:focus-visible::after,
+.bbd-search:focus-within::after {
+  opacity: 1;
+  transform: none;
+}
+.bbd-link-plain {
+  color: var(--openui-dashboard-ink-secondary);
+}
+
+/* Markdown: bb's own renderer inside. */
+.bbd-markdown {
+  min-width: 0;
+  color: var(--openui-dashboard-ink);
+}
+
+/* Callout */
+.bbd-callout {
+  --bbd-tone: var(--openui-dashboard-info);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--bbd-tone) 30%, transparent);
+  border-radius: var(--openui-dashboard-radius-md);
+  background: color-mix(in srgb, var(--bbd-tone) 8%, var(--openui-dashboard-surface));
+}
+.bbd-callout[data-tone="success"] {
+  --bbd-tone: var(--openui-dashboard-good);
+}
+.bbd-callout[data-tone="warning"] {
+  --bbd-tone: var(--openui-dashboard-warning);
+}
+.bbd-callout[data-tone="error"] {
+  --bbd-tone: var(--openui-dashboard-bad);
+}
+.bbd-callout-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--bbd-tone);
+  color: var(--openui-dashboard-surface);
+  font-size: 11px;
+  font-weight: 700;
+}
+.bbd-callout-title,
+.bbd-callout-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.bbd-callout-title {
+  font-weight: 600;
+  color: var(--openui-dashboard-ink);
+}
+.bbd-callout-text {
+  color: var(--openui-dashboard-ink-secondary);
+}
+
+/* Empty: the library's quiet well for empty states. */
+.bbd-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 24px 16px;
+  border-radius: var(--openui-dashboard-radius-sm);
+  background: color-mix(in srgb, var(--openui-dashboard-ink) 2.5%, transparent);
+  text-align: center;
+}
+.bbd-empty-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--openui-dashboard-ink);
+}
+.bbd-empty-reason {
+  max-width: 40ch;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--openui-dashboard-ink-muted);
+}
+
+/* SearchBox */
+.bbd-search {
+  position: relative;
+  min-width: 0;
+}
+.bbd-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 9px;
+  transform: translateY(-50%);
+  color: var(--openui-dashboard-ink-muted);
+  font-size: 14px;
+  pointer-events: none;
+}
+.bbd-search-input {
+  width: 100%;
+  height: 30px;
+  padding: 0 10px 0 28px;
+  border: 1px solid var(--openui-dashboard-border-strong);
+  border-radius: var(--openui-dashboard-radius-md);
+  background: var(--openui-dashboard-surface);
+  color: var(--openui-dashboard-ink);
+  font: inherit;
+  font-size: 13px;
+}
+.bbd-search-input::placeholder {
+  color: var(--openui-dashboard-ink-muted);
+}
+.bbd-search-input:focus {
+  outline: none;
+}
+
+/* Toggle: a switch whose thumb eases across and whose fill fades in. */
+.bbd-toggle {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  padding: 2px 0;
+  border: 0;
+  border-radius: var(--openui-dashboard-radius-sm);
+  background: none;
+  color: var(--openui-dashboard-ink);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.bbd-switch {
+  position: relative;
+  isolation: isolate;
+  flex: none;
+  width: 28px;
+  height: 16px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--openui-dashboard-ink) 16%, transparent);
+}
+.bbd-switch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--openui-dashboard-accent);
+  opacity: 0;
+  transition: opacity var(--bbd-quick) var(--bbd-ease-out);
+}
+.bbd-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--openui-dashboard-surface);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--openui-dashboard-ink) 25%, transparent);
+  transition: transform var(--bbd-quick) var(--bbd-ease-out);
+}
+.bbd-toggle[aria-checked="true"] .bbd-switch::before {
+  opacity: 1;
+}
+.bbd-toggle[aria-checked="true"] .bbd-switch-thumb {
+  transform: translateX(12px);
+}
+
+/* Slider: a styled range whose thumb eases when grabbed or focused. */
+.bbd-slider {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 6px 10px;
+  min-width: 0;
+  font-size: 13px;
+}
+.bbd-slider-label {
+  color: var(--openui-dashboard-ink);
+}
+.bbd-slider-value {
+  font-variant-numeric: tabular-nums;
+  color: var(--openui-dashboard-ink-secondary);
+}
+.bbd-slider-input {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 16px;
+  margin: 0;
+  background: none;
+  border-radius: 999px;
+  appearance: none;
+  cursor: pointer;
+}
+.bbd-slider-input::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--openui-dashboard-ink) 14%, transparent);
+}
+.bbd-slider-input::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border: 2px solid var(--openui-dashboard-accent);
+  border-radius: 50%;
+  background: var(--openui-dashboard-surface);
+  appearance: none;
+  transition: transform var(--bbd-quick) var(--bbd-ease-out);
+}
+.bbd-slider-input:active::-webkit-slider-thumb,
+.bbd-slider-input:focus-visible::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+.bbd-slider-input::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--openui-dashboard-ink) 14%, transparent);
+}
+.bbd-slider-input::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--openui-dashboard-accent);
+  border-radius: 50%;
+  background: var(--openui-dashboard-surface);
+  transition: transform var(--bbd-quick) var(--bbd-ease-out);
+}
+.bbd-slider-input:active::-moz-range-thumb,
+.bbd-slider-input:focus-visible::-moz-range-thumb {
+  transform: scale(1.2);
+}
+
+/* Frame: invisible until its document has loaded, then fades in once. */
+.bbd-frame-box {
+  min-width: 0;
+}
+.bbd-frame {
+  display: block;
+  width: 100%;
+  border: 0;
+  opacity: 0;
+  transition: opacity var(--bbd-enter) var(--bbd-ease-out);
+}
+.bbd-frame[data-loaded] {
+  opacity: 1;
+}
+.bbd-frame-left {
+  margin: 0;
+  padding: 12px;
+  border-radius: var(--openui-dashboard-radius-sm);
+  background: color-mix(in srgb, var(--openui-dashboard-ink) 2.5%, transparent);
+  font-size: 12px;
+  color: var(--openui-dashboard-ink-muted);
+}
+
+/* card-fit: a Card that holds only these components fits them. The library's Row gives a card whose
+   content it does not know a chart's 400 px minimum; a card in the same row as a chart still
+   stretches to the row. Relies on the library's card markup; if that changes, cards keep 400 px. */
+.openui-dashboard-cell > .openui-dashboard-card:has(> .openui-dashboard-card-body > [class*="bbd-"]):not(:has(> .openui-dashboard-card-body > :not([class*="bbd-"]))) {
+  min-height: auto;
+}
+
+/* AskAgent */
+.bbd-ask {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--openui-dashboard-border-strong);
+  border-radius: var(--openui-dashboard-radius-md);
+  background: var(--openui-dashboard-surface);
+  color: var(--openui-dashboard-ink);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform var(--bbd-quick) var(--bbd-ease-out);
+}
+.bbd-ask:active {
+  transform: scale(0.97);
+}
+.bbd-ask:disabled {
+  cursor: default;
+  opacity: 0.55;
+  transform: none;
+}
+
+/* Freshness */
+.bbd-freshness {
+  margin: 0;
+  font-size: 12px;
+  color: var(--openui-dashboard-ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The header's Colours popover (ui/colours.tsx). Panel chrome, outside the dashboard's tokens, so it
+   uses bb's own variables. It drops in like the Drawer; a swatch lifts on hover; the chosen one is ringed. */
+.bbd-pop {
+  animation: bbd-drawer-in var(--bbd-enter) var(--bbd-ease-out) both;
+}
+.bbd-swatch {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform var(--bbd-quick) var(--bbd-ease-out);
+}
+.bbd-swatch:hover {
+  transform: scale(1.1);
+}
+.bbd-swatch:focus-visible {
+  outline: 2px solid var(--ring, var(--foreground));
+  outline-offset: 2px;
+}
+.bbd-swatch[aria-pressed="true"] {
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--foreground);
+}
+.bbd-swatch-custom {
+  background: none;
+  overflow: hidden;
+}
+.bbd-swatch-custom::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+/* One rule per engine prefix: a selector list with an unknown pseudo-element is dropped whole. */
+.bbd-swatch-custom::-webkit-color-swatch {
+  border: 0;
+  border-radius: 999px;
+}
+.bbd-swatch-custom::-moz-color-swatch {
+  border: 0;
+  border-radius: 999px;
+}
+
+/* Edit mode (ui/edit.tsx): a layer over the inert dashboard with one transparent button per part.
+   Hover, keyboard focus and the picked part draw a ring in the dashboard's accent, so it follows the
+   theme and the viewer's colours. Deeper parts sit higher (z-index), so the pointer finds the innermost.
+   Above the library's own layers inside a dashboard (its popovers are at 30). */
+.bbd-edit-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 35;
+}
+.bbd-spot {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  border-radius: var(--openui-dashboard-radius-sm);
+  background: none;
+  cursor: pointer;
+}
+.bbd-spot::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--openui-dashboard-accent);
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--openui-dashboard-accent) 6%, transparent);
+  opacity: 0;
+  transition: opacity var(--bbd-quick) var(--bbd-ease-out);
+  pointer-events: none;
+}
+.bbd-spot[data-hover]::after,
+.bbd-spot:focus-visible::after,
+.bbd-spot[aria-expanded="true"]::after {
+  opacity: 1;
+}
+.bbd-spot:focus-visible {
+  outline: none;
+}
+/* Nothing inside a Frame takes the pointer while editing (the dashboard is inert as well). */
+[data-editing] iframe {
+  pointer-events: none;
+}
+
+/* Reduced motion: no animation and no transition anywhere in these components. Every animated
+   element carries an bbd- class, so the attribute selector covers them all; the slider thumb is a
+   pseudo-element of its own and is listed separately (one rule per engine prefix). */
+@media (prefers-reduced-motion: reduce) {
+  [class*="bbd-"],
+  [class*="bbd-"]::before,
+  [class*="bbd-"]::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .bbd-slider-input::-webkit-slider-thumb {
+    transition: none !important;
+  }
+  .bbd-slider-input::-moz-range-thumb {
+    transition: none !important;
+  }
+}

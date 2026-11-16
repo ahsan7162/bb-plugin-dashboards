@@ -1,0 +1,56 @@
+{
+  "name": "bb-plugin-dashboards",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "description": "BB plugin: dashboards and small tools built by prompting, written in OpenUI Lang, opened in the side panel.",
+  "engines": {
+    "bb": ">=0.49",
+    "bbPluginSdk": ">=0.6.132"
+  },
+  "bb": {
+    "name": "bb Dashboards",
+    "description": "Dashboards built by prompting an agent that open in their own side-panel tab, stay interactive, refresh their own data and change when you ask again.",
+    "branding": {
+      "icon": "LayoutDashboard"
+    },
+    "server": "./server.ts",
+    "app": "./app.tsx",
+    "skills": ["skills"]
+  },
+  "scripts": {
+    "setup": "npm ci && npm rebuild better-sqlite3 --ignore-scripts=false",
+    "generate": "node scripts/generate.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "bb plugin build",
+    "test": "bb plugin build && vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "@openuidev/dashboard-library": "1.0.1",
+    "@openuidev/lang-core": "1.1.1",
+    "@openuidev/react-lang": "1.1.1",
+    "zod": "4.6.7",
+    "zustand": "4.5.7"
+  },
+  "overrides": {
+    "katex": "file:./stubs/katex"
+  },
+  "devDependencies": {
+    "@get-bb/plugin-sdk": "0.6.132",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "better-sqlite3": "^12.0.0",
+    "cron-parser": "^5.5.0",
+    "hono": "^4.11.9",
+    "jsdom": "31.0.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "^5.7.0",
+    "vitest": "5.1.0"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "katex",
+  "version": "0.16.0-stub",
+  "private": true,
+  "description": "Empty stand-in for katex. OpenUI's react-components loads katex for math, which dashboards never draw; the real package's CSS names 60 font files that bb plugin build has no loader for.",
+  "license": "MIT",
+  "main": "index.cjs"
+}

@@ -1,0 +1,7 @@
+node_modules/
+# The build output only; stubs/katex/dist/ must be committed.
+/dist/
+# Internal build history, not part of the published plugin.
+PLAN.md
+# Build-phase reference spikes, internal and excluded from tests.
+spikes/
