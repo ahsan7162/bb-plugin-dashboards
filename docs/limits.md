@@ -5,16 +5,10 @@ This page collects every known limit of bb Dashboards and every part that has no
 ## Where it was tested
 
 - Every check in the real bb app was made on macOS, with the Claude Code provider. Windows and Linux were not tried in the real app.
-- Only the Claude Code provider was used. Other agent providers are untested, both for token cost and for whether their models write programs that pass the save check.
+- Only the Claude Code provider was used. Other agent providers are untested, including whether their models write programs that pass the save check.
 - Installing from a git source or a marketplace is untested. That path installs dependencies with bb's own npm, with install scripts off and development dependencies left out, and relies on the repository's empty `katex` stand-in package (see [development.md](development.md)). An install into a clean bb profile has not been done either.
 - Restoring an old version and the refusal of a remote `http://` address when adding a connection were checked in the real app. Keeping the newest 100 versions, the `https` rule at import and at call time, refusing other plugins and stopping a run when its approval is withdrawn are covered by the test suite only.
 - No capture of real network traffic was made. The claims about outside calls come from tests on the built bundles and a server test that saves and reads many dashboards with the network blocked (see [security-and-privacy.md](security-and-privacy.md)).
-
-## Agent providers and token cost
-
-- Token figures were measured with the Claude Code provider only. See [agents.md](agents.md) for the numbers.
-- The idle cost was not measured again after the skill's description grew by 29 characters, nor after the rename to bb Dashboards, which changed tool names and descriptions.
-- With the Claude Code provider, tool definitions reach the model only when the agent first needs the tools. A provider that sends every tool definition with every request would also pay for the three definitions in each turn. That case was not measured.
 
 ## Platforms
 

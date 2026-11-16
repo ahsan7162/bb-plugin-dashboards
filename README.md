@@ -199,22 +199,6 @@ What makes it different:
 - **No model call to view or refresh.** Opening, filtering, drilling down, switching versions, changing colours and refreshing file, git, pull request, MCP and approved-script sources all happen without the model. Only changes, AskAgent buttons and agent-source refreshes cost a turn.
 - **Read-only by design.** Each path has its own guard: no `Mutation`, fixed read functions for built-in sources, only confirmed read-only MCP tools, a sandboxed frame, and an approval dialog for scripts. See [docs/security-and-privacy.md](docs/security-and-privacy.md).
 
-## Token cost
-
-Measured with the Claude Code provider in real threads, before the rename to bb Dashboards. Details and the unmeasured cases are in [docs/agents.md](docs/agents.md#token-cost).
-
-| What | Cost |
-| --- | --- |
-| A thread with the plugin installed, not used | +17 tokens (43,541 against 43,524 without it) |
-| The three tool definitions | 921 tokens in all (`dashboard_save` 340) |
-| The skill body (authoring guide), when used | about 10,500 characters |
-| Topics (signatures, live data, themes...), each when fetched | about 900 to 8,400 characters |
-| One whole build of a dashboard | about 18,400 tokens added to its thread; earlier builds of other dashboards about 24,300 to 26,400 (indicative only) |
-| Opening, filtering, drill-down, versions, Colours, live refresh except agent sources | 0 |
-| A change, an Edit mode Send, an AskAgent click, an agent-source refresh | one agent turn each (not measured) |
-
-Not measured: other providers; a provider that sends every tool definition with every request (it would also pay the 921 tokens each turn); the idle cost after the skill's description grew by 29 characters and after the rename.
-
 ## Safety and privacy
 
 In brief; the full page is [docs/security-and-privacy.md](docs/security-and-privacy.md).
@@ -302,7 +286,7 @@ More in [docs/development.md](docs/development.md) and [docs/architecture.md](do
 | [Scripts](docs/scripts.md) | Script sources and the approval dialog |
 | [Themes and colours](docs/themes-and-colours.md) | bb's theme, dashboard themes, the Colours control |
 | [Editing](docs/editing.md) | Changing by prompt, versions, Edit mode |
-| [What the agent sees](docs/agents.md) | The skill, the tools, topics, the save check, token cost |
+| [What the agent sees](docs/agents.md) | The skill, the tools, topics, the save check |
 | [Security and privacy](docs/security-and-privacy.md) | The read-only model, secrets, storage, callers, telemetry |
 | [Architecture](docs/architecture.md) | Server, browser, storage, rendering, repository layout |
 | [Limits](docs/limits.md) | Every known limit and untested area |

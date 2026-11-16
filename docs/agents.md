@@ -1,6 +1,6 @@
 # What the agent sees
 
-This page is for people who want to know exactly what bb Dashboards puts in front of an agent, and what that costs. The plugin adds one skill, `dashboards`, whose short description is the only text about the plugin that is always present; the skill's body (the authoring guide) loads only when the agent decides it needs it. It adds three tools, `dashboard_save`, `dashboard_get` and `dashboard_sources`, with short definitions. Details such as chart signatures, live data and themes are topics the agent fetches only when a dashboard needs them. Every save goes through a strict check on the server. The token figures at the end were measured with the Claude Code provider only.
+This page is for people who want to know exactly what bb Dashboards puts in front of an agent. The plugin adds one skill, `dashboards`, whose short description is the only text about the plugin that is always present; the skill's body (the authoring guide) loads only when the agent decides it needs it. It adds three tools, `dashboard_save`, `dashboard_get` and `dashboard_sources`, with short definitions. Details such as chart signatures, live data and themes are topics the agent fetches only when a dashboard needs them. Every save goes through a strict check on the server. The token figures at the end were measured with the Claude Code provider only.
 
 ## Always present
 
@@ -8,7 +8,7 @@ This page is for people who want to know exactly what bb Dashboards puts in fron
 
   > Use when the user wants to keep, reopen, come back to or change later what they ask for, or wants it to refresh: a dashboard, report, tracker or small tool, saved as a dashboard that opens in bb's side panel. A chart or table that only answers the current message stays in the reply.
 
-- The three tools. Whether their full definitions are sent with every request or only when the agent first needs them depends on the provider (see [Token cost](#token-cost)).
+- The three tools. Whether their full definitions are sent with every request or only when the agent first needs them depends on the provider.
 - No always-on instructions: the plugin registers no instruction text of its own.
 - The tools and the skill are offered in every thread: threads a person started, forks, helper (worker) threads and threads another plugin runs. A dashboard made in a helper thread stays refreshable and changeable from there.
 
@@ -127,32 +127,9 @@ Checked in real threads with both kinds of plugin installed (Claude Code provide
 
 <!-- SCREENSHOT inline-and-dashboard-dark.png (the picture is ready at screenshots/inline-and-dashboard-dark.png): one agent reply, dark mode, holding both an inline table drawn in the reply and a dashboard card. The dashboard is not open beside it. Rules for a replacement: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. To show it, add this line here: ![One reply with an inline table and a dashboard card](screenshots/inline-and-dashboard-dark.png) and, if you want it, this caption on its own line: *An inline table answers the question; the card keeps the dashboard.* -->
 
-## Token cost
-
-Measured with the Claude Code provider in real threads, before the rename to bb Dashboards. Other providers were not measured.
-
-| What | Cost | How it was found |
-| --- | --- | --- |
-| A thread with the plugin installed, not used | +17 tokens (43,541 against 43,524 without the plugin) | Measured |
-| The three tool definitions | 921 tokens in all; `dashboard_save` 340 | Measured |
-| The skill body (the guide), when the skill is used | about 10,500 characters | Size only; tokens not measured on their own |
-| A topic, when fetched | about 900 to 8,400 characters each | Size only |
-| One whole build of a dashboard | about 18,400 tokens added to its thread; earlier builds of other dashboards added about 24,300 to 26,400 | Measured; the tasks differ, so indicative only |
-| Opening, reopening, filters, tabs, search, drill-down, switching versions, Colours | 0 | No model call by design |
-| Live refresh of file, git, pull request, MCP and approved script sources | 0 | No model call by design |
-| A change by prompt, an Edit mode Send, an AskAgent click, a refresh of an agent source | One agent turn each | Not measured |
-| A save the check refuses | One more save by the agent | Not measured |
-
-Notes:
-
-- The idle figure is small because, with the Claude Code provider, tool definitions reach the model only when the agent first needs the tools. A provider that sends every tool definition with every request would pay roughly the 921 tokens in each turn as well. That was not measured.
-- The idle cost was not measured again after the skill's description grew by 29 characters, nor after the rename, which changed the tool names and descriptions.
-- What keeps the cost low: data stays out of the program (a source holds it), changes are patches of named statements, and the guide and signatures are served on demand instead of being always present.
-- Guards in the tests keep the always-present parts small: the three tool definitions are capped at 1,000, 650 and 1,000 characters, 2,600 together (`server/server.test.ts`); the guide at 10,500 characters and the skill description at 300 (`scripts/generate.test.ts`).
-
 ## Related pages
 
 - [components.md](components.md): the signatures the agent fetches.
 - [data-sources.md](data-sources.md): what `dashboard_sources` describes.
 - [security-and-privacy.md](security-and-privacy.md): what the agent can and cannot reach.
-- [limits.md](limits.md#agent-providers-and-token-cost): untested providers and unmeasured costs.
+- [limits.md](limits.md#where-it-was-tested): untested providers.
