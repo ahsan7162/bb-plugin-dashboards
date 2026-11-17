@@ -1,6 +1,6 @@
 {
   "name": "bb-plugin-dashboards",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "license": "MIT",
   "description": "BB plugin: dashboards and small tools built by prompting, written in OpenUI Lang, opened in the side panel.",
@@ -16,7 +16,9 @@
     },
     "server": "./server.ts",
     "app": "./app.tsx",
-    "skills": ["skills"]
+    "skills": [
+      "skills"
+    ]
   },
   "scripts": {
     "setup": "npm ci && npm rebuild better-sqlite3 --ignore-scripts=false",
@@ -26,6 +28,7 @@
     "test": "bb plugin build && vitest run"
   },
   "dependencies": {
+    "@get-bb/plugin-sdk": "0.6.132",
     "@modelcontextprotocol/sdk": "1.32.2",
     "@openuidev/dashboard-library": "1.0.1",
     "@openuidev/lang-core": "1.1.1",
@@ -37,7 +40,6 @@
     "katex": "file:./stubs/katex"
   },
   "devDependencies": {
-    "@get-bb/plugin-sdk": "0.6.132",
     "@testing-library/dom": "10.4.2",
     "@testing-library/react": "16.3.3",
     "@types/better-sqlite3": "^7.6.12",
