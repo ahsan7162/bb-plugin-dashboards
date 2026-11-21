@@ -1,4 +1,4 @@
-# bb Dashboards
+<img width="3200" height="2000" alt="11-inline" src="https://github.com/user-attachments/assets/cbd288ea-e1e6-406a-af45-7810ffbcf341" /># bb Dashboards
 
 [![M8ven Score](https://m8ven.ai/badge/mcp/ahsan7162-bb-plugin-dashboards-1a6os1?v=2012afb657eab83192f57eb2784762de)](https://m8ven.ai/mcp/ahsan7162-bb-plugin-dashboards-1a6os1?s=readme)
 
@@ -99,7 +99,8 @@ A page in bb's navigation lists every dashboard, last changed first, with its nu
 
 Some bb plugins let an agent draw charts and tables inline in a reply. The `dashboards` skill draws the line: what you want to keep, reopen, change later or have refreshed becomes a dashboard; a chart that only answers the current message stays in the reply. One reply can hold both, and a change to something already saved as a dashboard changes the dashboard instead of drawing a new inline chart. This was checked in real threads with both kinds of plugin installed. See [docs/agents.md](docs/agents.md#working-alongside-inline-reply-ui-plugins).
 
-![Uploading 11-inline.png…]()
+<img width="3200" height="2000" alt="11-inline" src="https://github.com/user-attachments/assets/0e0e875c-3895-43cf-9782-11e14ad2f56e" />
+
 
 ## Components
 
