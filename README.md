@@ -1,5 +1,7 @@
 # bb Dashboards
 
+[![M8ven Score](https://m8ven.ai/badge/mcp/ahsan7162-bb-plugin-dashboards-1a6os1?v=2012afb657eab83192f57eb2784762de)](https://m8ven.ai/mcp/ahsan7162-bb-plugin-dashboards-1a6os1?s=readme)
+
 A [bb](https://getbb.app) plugin for dashboards you build by asking an agent and keep. The agent writes the dashboard as an [OpenUI Lang](https://www.openui.com) program using OpenUI's dashboard component library; the plugin checks it, saves it as a new version each time, and shows a card in the reply that opens the dashboard in bb's side panel. Filters, tabs, search and drill-down work with no model call. A dashboard can load its own data from a file, the branch's git state and pull request, a read-only tool of an MCP server, or a script you approved, and refresh it without the agent. You change it by asking again, or by pointing at the part you mean.
 
 <!-- VIDEO: open this file in GitHub's web editor and drag your .mp4 onto the line below.
