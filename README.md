@@ -9,10 +9,7 @@ A [bb](https://getbb.app) plugin for dashboards you build by asking an agent and
      which renders as an inline player. Delete this comment afterwards. -->
 <!-- video goes here -->
 
-<img width="1578" height="2504" alt="hero-dark" src="https://github.com/user-attachments/assets/95368c7b-91e4-406a-a3d9-118b1a78b649" />
-
-
-<img width="1578" height="2504" alt="hero-light" src="https://github.com/user-attachments/assets/b9b4589d-301e-4ab9-9b04-8ccc1886ad9d" />
+<!-- IMAGE: drag 01-hero.png onto this line in GitHub's web editor, then delete this comment -->
 
 ## What it does
 
@@ -49,13 +46,13 @@ flowchart LR
 
 The agent's reply holds a small `bb-dashboard` block with the dashboard's id, which bb draws as a card. "Open in side panel" opens the dashboard in its own tab beside the thread. The header shows the title, how the dashboard refreshes, and the Edit, Colours and version controls. If bb cannot open the side panel where the card is, the card points to the Dashboards page. See [docs/getting-started.md](docs/getting-started.md).
 
-<img width="1578" height="1700" alt="card-in-reply-dark" src="https://github.com/user-attachments/assets/61302db1-44ee-4296-a22d-79d1ee73e3ac" />
+<!-- IMAGE: drag 02-card.png onto this line in GitHub's web editor, then delete this comment -->
 
 ### Changing a dashboard by prompt, and versions
 
 Ask "add a chart by region", "make it dark green" or "mark the third task Done". The agent reads the current program with `dashboard_get` and saves a patch of only the new or changed statements; the plugin merges it, checks the whole program again and saves the next version. The newest 100 versions are kept. Each can be viewed, read-only, from the header's version list, and restored as the new latest version. Your filter choices survive a new version. See [docs/editing.md](docs/editing.md).
 
-<!-- SCREENSHOT versions-dark.png (not taken yet; add an image link here once it exists): a dashboard in bb's side panel, dark mode, with the header's version list open, showing "Latest: version N" and older versions with their save times; or an older version on screen with its "Version 2 of 4, read-only" line and the "Back to latest" button. Rules: about 1,580 px wide (at least 1,200), PNG under 2 MiB, stock bb theme, invented data only, no thread list or project name. -->
+<!-- IMAGE: drag 03-versions.png onto this line in GitHub's web editor, then delete this comment -->
 
 ### Live data
 
@@ -69,44 +66,41 @@ A dashboard declares named, read-only sources and reads each with a `Query` stat
 
 All but the last refresh by themselves, every 10 seconds at the shortest, and pause while the tab is hidden. `Freshness` shows when a source last answered; `RefreshButton` refreshes now. See [docs/data-sources.md](docs/data-sources.md), [docs/connections.md](docs/connections.md) and [docs/scripts.md](docs/scripts.md).
 
-<img width="1578" height="2504" alt="live-data-dark" src="https://github.com/user-attachments/assets/208fe29f-567e-4e67-a912-c1a36b2cda95" />
+<!-- IMAGE: drag 04-live.png onto this line in GitHub's web editor, then delete this comment -->
 
-<img width="1632" height="1414" alt="connections-dark" src="https://github.com/user-attachments/assets/086e2a2d-0fbc-46e7-9794-b4dd9bc55704" />
+<!-- IMAGE: drag 05-connections.png onto this line in GitHub's web editor, then delete this comment -->
 
-<img width="1532" height="1502" alt="script-approval-dark" src="https://github.com/user-attachments/assets/8a317b7f-527d-4fb1-a17d-7cb0f419be1a" />
+<!-- IMAGE: drag 06-scripts.png onto this line in GitHub's web editor, then delete this comment -->
 
 ### Interactivity without the model
 
 Filters, tabs, search boxes, toggles and sliders set `$variables` that the rest of the program reads, so the dashboard responds at once. Picking an item in a `RecordList` opens its details in a `Drawer`. The panel remembers the choices you made, per dashboard, in your browser. None of this calls the model. See [docs/components.md](docs/components.md#the-drill-down-pattern).
 
-<img width="1578" height="2504" alt="components-dark" src="https://github.com/user-attachments/assets/972af57e-2cd5-479d-8f70-c7cc7dc1e413" />
+<!-- IMAGE: drag 07-interactive.png onto this line in GitHub's web editor, then delete this comment -->
 
 ### Edit mode: point at a part and ask for a change
 
 Click Edit in the dashboard's header, then click a chart, card, filter or any other part (or Tab to it and press Enter). A popover shows what you picked, with breadcrumbs, and a box for what should change. Send delivers one message to the thread that names the dashboard, the version, the part and its piece of the program, and asks the agent to change only that. Each Send costs one agent turn. See [docs/editing.md](docs/editing.md#edit-mode).
 
-<img width="1578" height="2504" alt="edit-mode-dark" src="https://github.com/user-attachments/assets/9a717292-0e7e-46dc-88fc-603137902d85" />
-<img width="1578" height="2504" alt="edit-mode-light" src="https://github.com/user-attachments/assets/deeda0bc-93db-4157-a538-38704bf69a4f" />
+<!-- IMAGE: drag 08-edit.png onto this line in GitHub's web editor, then delete this comment -->
 
 ### Colours and themes
 
 A dashboard follows bb's theme in light and dark mode. Charts start from bb's main colour; when that colour is a neutral grey, as in bb's stock theme, they start from bb's blue accent, then its other accent colours, then OpenUI's palette. The agent can give a dashboard its own theme (colours, radius, spacing and one of three generic fonts), saved as a new version. On top of both, the Colours button lets whoever is looking pick an accent, chart colours (from the accent, or one of two colour-blind-friendly palettes) and a light or dark look for that dashboard. Those choices stay in your browser, cost no model call and make no version. See [docs/themes-and-colours.md](docs/themes-and-colours.md).
 
-<img width="1578" height="2504" alt="colours-dark" src="https://github.com/user-attachments/assets/bdb476f7-998c-4efd-a728-a2fb4db4f19c" />
-
-<img width="1578" height="2504" alt="colours-light" src="https://github.com/user-attachments/assets/19b97c09-182c-4de0-b160-402a465a75dd" />
+<!-- IMAGE: drag 09-colours.png onto this line in GitHub's web editor, then delete this comment -->
 
 ### The Dashboards page
 
 A page in bb's navigation lists every dashboard, last changed first, with its number of versions and a link to the thread it was made in. Open one there, or delete it with all its versions. The page's Connections section manages the plugin's MCP connections. See [docs/getting-started.md](docs/getting-started.md#reopening-a-dashboard).
 
-<img width="1632" height="782" alt="dashboards-page-dark" src="https://github.com/user-attachments/assets/cc33f9cf-d21a-476f-ac37-a6a31e771097" />
+<!-- IMAGE: drag 10-page.png onto this line in GitHub's web editor, then delete this comment -->
 
 ### Working alongside inline-reply UI plugins
 
 Some bb plugins let an agent draw charts and tables inline in a reply. The `dashboards` skill draws the line: what you want to keep, reopen, change later or have refreshed becomes a dashboard; a chart that only answers the current message stays in the reply. One reply can hold both, and a change to something already saved as a dashboard changes the dashboard instead of drawing a new inline chart. This was checked in real threads with both kinds of plugin installed. See [docs/agents.md](docs/agents.md#working-alongside-inline-reply-ui-plugins).
 
-<img width="3160" height="1242" alt="inline-and-dashboard-dark" src="https://github.com/user-attachments/assets/5a4748b7-c183-45bb-a4a3-5415c689604e" />
+<!-- IMAGE: drag 11-inline.png onto this line in GitHub's web editor, then delete this comment -->
 
 ## Components
 
